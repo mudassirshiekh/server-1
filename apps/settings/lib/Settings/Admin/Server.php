@@ -53,6 +53,9 @@ class Server implements IDelegatedSettings {
 		$this->initialStateService->provideInitialState('profileEnabledGlobally', $this->profileManager->isProfileEnabled());
 		$this->initialStateService->provideInitialState('profileEnabledByDefault', $this->isProfileEnabledByDefault($this->config));
 
+		// Basic settings
+		$this->initialStateService->provideInitialState('onlyAdminsCanCreateSystemTags', $this->appConfig->getValueString('systemtags', 'only_admins_can_create', 'true'));
+
 		return new TemplateResponse('settings', 'settings/admin/server', [
 			'profileEnabledGlobally' => $this->profileManager->isProfileEnabled(),
 		], '');
