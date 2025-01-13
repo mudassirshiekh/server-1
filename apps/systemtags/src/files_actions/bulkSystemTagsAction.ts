@@ -10,6 +10,8 @@ import { isPublicShare } from '@nextcloud/sharing/public'
 import { spawnDialog } from '@nextcloud/dialogs'
 import { t } from '@nextcloud/l10n'
 
+import { loadState } from '@nextcloud/initial-state'
+
 import TagMultipleSvg from '@mdi/svg/svg/tag-multiple.svg?raw'
 
 /**
@@ -34,6 +36,10 @@ export const action = new FileAction({
 
 	// If the app is disabled, the action is not available anyway
 	enabled(nodes) {
+		if (loadState('settings', 'onlyAdminsCanCreateSystemTags', '1') === '1') {
+			return false
+		}
+
 		if (isPublicShare()) {
 			return false
 		}
